@@ -57,6 +57,7 @@ class Home extends Component {
     let id = this.state.data.userId;
     return (
       <View style={styles.container}>
+        <Text> Home Screen </Text>
         <Blink text={`id: ${id}`} />
         <Blink text={`title: ${title}`} />
         <Blink text={`description: ${body}`} />
