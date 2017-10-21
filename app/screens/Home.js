@@ -63,6 +63,7 @@ class Home extends Component {
           style={{width: 50, height: 50}}
           source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy-PUNCT16vUlUY5cmCPAllVjo-Rf1kT_9YsV3FKvELZzAIdFpew'}}
         />
+        <Image source={require('../images/scorpio200.png')} />
         <Blink text={`id: ${id}`} />
         <Blink text={`title: ${title}`} />
         <Blink text={`description: ${body}`} />
