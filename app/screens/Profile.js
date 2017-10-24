@@ -1,5 +1,7 @@
+import React, { Component, PropTypes } from 'react';
+import { FlatList } from 'react-native';
+
 import { colors } from '../config/styles';
-import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -31,6 +33,10 @@ class Profile extends Component {
     );
   }
 }
+
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default Profile;
 

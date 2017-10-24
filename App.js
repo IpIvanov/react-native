@@ -1,19 +1,14 @@
-import React, { Component } from 'react';
-import Home from './app/screens/Home';
-import Profile from './app/screens/Profile';
-import { TabNavigator } from 'react-navigation'
+import React from 'react';
+import { Platform } from 'react-native';
+import { Tabs, Drawer } from './app/config/router';
 
-const MainScreenNavigator = TabNavigator({
-  Home: {screen: Home},
-  Profile: {screen: Profile}
-}, {
-  tabBarPosition: 'bottom',
-  swipeEnabled: true
-});
+const App = () => {
+  if (Platform.OS === 'ios') {
+    return <Tabs />;
+  }
 
-MainScreenNavigator.navigationOptions = {
-  title: 'Tab example'
+  return <Drawer />;
 };
 
-export default MainScreenNavigator;
+export default App;
 
