@@ -5,7 +5,8 @@ import { colors } from '../config/styles';
 import {
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -25,11 +26,24 @@ const styles = StyleSheet.create({
 });
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { data } = this.props.navigation.state.params;
+    const { sign } = this.props.navigation.state.params;
+    const selectedSign = data.filter(function( obj ) {
+      return sign.name === obj.name;
+    });
+
     return (
-      <View style={styles.container}>
+      <ScrollView>
         <Text>Profile Page</Text>
-      </View>
+        <Text>{sign.name}</Text>
+        <Text>{selectedSign[0].day}</Text>
+        <Text>{selectedSign[0].month}</Text>
+      </ScrollView>
     );
   }
 }

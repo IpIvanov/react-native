@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { FlatList } from 'react-native';
-
 import {
   Text,
   View,
@@ -9,32 +8,18 @@ import {
   Button,
   TouchableHighlight
 } from 'react-native';
-
 import { colors } from '../config/styles';
-
-import Blink from '../components/Blink/Blink';
+import { signs } from '../config/signs';
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    flexDirection: 'row',
+    padding: 8,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    backgroundColor: colors.background,
-  },
-  main: {
-    fontSize: 20,
-    textAlign: 'center',
-    color: colors.headerText,
-    fontWeight: '400',
-    fontStyle: 'italic',
-  },
-  images: {
-    flex: 1/2,
-    maxWidth: 70,
-    maxHeight: 70,
-    margin: 20
+    paddingTop: 50,
+    backgroundColor: '#FFFFFF'
   }
 });
 
@@ -51,7 +36,7 @@ class Home extends Component {
   }
 
   makeRemoteRequest = () => {
-    const url = 'https://jsonplaceholder.typicode.com/posts/1';
+    const url = 'https://app-nodejs-mongodb.herokuapp.com/api/signs';
 
     fetch(url)
       .then(res => res.json())
@@ -65,8 +50,45 @@ class Home extends Component {
       });
   };
 
-  handleRowPress = () => {
-    this.props.navigation.navigate('Profile');
+  handleRowPress = (item) => {
+    this.props.navigation.navigate('Profile', {
+      sign: item,
+      data: this.state.data
+    });
+  };
+
+  _renderItem = ({ item }) => {
+    return (
+      <TouchableHighlight underlayColor="white" activeOpacity={0.8} onPress={() => this.handleRowPress(item)}>
+        <View style={{
+          elevation: 1,
+          borderRadius: 2,
+          flex: 1,
+          flexDirection: 'row',  // main axis
+          justifyContent: 'flex-start', // main axis
+          alignItems: 'center', // cross axis
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 18,
+          paddingRight: 16,
+          marginLeft: 14,
+          marginRight: 14,
+          marginTop: 0,
+          marginBottom: 6,
+        }}>
+          <Image style={{width: 70, height: 70}} source={item.img}/>
+          <View style={{
+            flex: 1,
+            flexDirection: 'column',  // main axis
+            justifyContent: 'flex-start', // main axis
+            alignItems: 'center', // cross axis
+          }}>
+            <Text style={{ fontFamily: 'Roboto', fontSize: 20 }}>{item.name}</Text>
+            <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: colors.dimmedText }}>{item.date}</Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    )
   };
 
   render() {
@@ -74,43 +96,14 @@ class Home extends Component {
     let body = this.state.data.body;
     let id = this.state.data.userId;
     return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => this.handleRowPress()}>
-          <Image style={styles.images} source={require('../images/scorpio200.png')} />
-        </TouchableHighlight>
+      <View style={styles.mainContainer}>
+        <FlatList
+          data={signs}
+          renderItem={this._renderItem}
+          keyExtractor={(item) => item.name}
+          style={{alignSelf: "stretch",  backgroundColor: '#FFFFFF'}}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     );
   }
