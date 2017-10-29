@@ -26,34 +26,11 @@ const styles = StyleSheet.create({
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: {}
-    };
   }
-
-  componentDidMount() {
-    this.makeRemoteRequest();
-  }
-
-  makeRemoteRequest = () => {
-    const url = 'https://app-nodejs-mongodb.herokuapp.com/api/signs';
-
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: res
-        })
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
-  };
 
   handleRowPress = (item) => {
     this.props.navigation.navigate('Profile', {
-      sign: item,
-      data: this.state.data
+      name: item.name
     });
   };
 
@@ -92,9 +69,6 @@ class Home extends Component {
   };
 
   render() {
-    let title = this.state.data.title;
-    let body = this.state.data.body;
-    let id = this.state.data.userId;
     return (
       <View style={styles.mainContainer}>
         <FlatList
