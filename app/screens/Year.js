@@ -14,9 +14,10 @@ class Year extends Component {
   }
 
   render() {
+    let yearInfo = this.props.screenProps[0].year;
     return (
       <View>
-        <Text>First tab</Text>
+        <Text>{yearInfo}</Text>
       </View>
     );
   }

@@ -14,9 +14,10 @@ class Month extends Component {
   }
 
   render() {
+    let monthInfo = this.props.screenProps[0].month;
     return (
       <View>
-        <Text>Second tab</Text>
+        <Text>{monthInfo}</Text>
       </View>
     );
   }

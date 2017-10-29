@@ -14,9 +14,10 @@ class Week extends Component {
   }
 
   render() {
+    let weekInfo = this.props.screenProps[0].week;
     return (
       <View>
-        <Text>First tab</Text>
+        <Text>{weekInfo}</Text>
       </View>
     );
   }

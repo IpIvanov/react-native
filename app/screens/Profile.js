@@ -1,5 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { TabNavigationStack } from '../config/router';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator
+} from 'react-native';
 
 class Profile extends Component {
   constructor(props) {
@@ -7,6 +14,7 @@ class Profile extends Component {
 
     this.state = {
       signInfo: [],
+      showLoading: true
     };
   }
 
@@ -22,7 +30,8 @@ class Profile extends Component {
       .then(res => {
         this.setState({
           signInfo: res
-        })
+        });
+        this.setState({ showLoading: false });
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -35,9 +44,25 @@ class Profile extends Component {
     const selectedSign = data.filter(function( obj ) {
       return name === obj.name;
     });
-    return (
-      <TabNavigationStack screenProps={selectedSign}/>
-    );
+    if(this.state.showLoading) {
+      return (
+        <ActivityIndicator
+          animating={true}
+          color="#aa3300"
+          style={[{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },{height: 100}, {transform: [{scale: 3}]}]}
+          size="large"
+        />
+      );
+    } else {
+      return (
+        <TabNavigationStack screenProps={selectedSign}/>
+      );
+    }
   }
 }
 

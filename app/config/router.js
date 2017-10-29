@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {Easing, Animated} from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { Easing, Animated } from 'react-native';
+import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../screens/Home';
@@ -24,7 +24,7 @@ export const NavigationStack = StackNavigator({
       title: 'Profile'
     }),
   }
-},{
+}, {
   headerMode: 'none',
   mode: 'modal',
   navigationOptions: {
@@ -71,16 +71,18 @@ export const TabNavigationStack = TabNavigator({
     screen: Year,
   }
 }, {
+  tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
-  animationEnabled: true,
-  backBehavior: none,
+  swpie: true,
+  backBehavior: 'none',
   tabBarOptions: {
-    activeTintColor: '#e91e63',
+    activeTintColor: '#333',
     labelStyle: {
       fontSize: 12,
     },
     style: {
-      backgroundColor: 'blue',
-    },
-  },
+      padding: 0,
+      margin: 0
+    }
+  }
 });

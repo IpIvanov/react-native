@@ -30,13 +30,14 @@ class Home extends Component {
 
   handleRowPress = (item) => {
     this.props.navigation.navigate('Profile', {
-      name: item.name
+      name: item.name,
+      img: item.img
     });
   };
 
   _renderItem = ({ item }) => {
     return (
-      <TouchableHighlight underlayColor="white" activeOpacity={0.8} onPress={() => this.handleRowPress(item)}>
+      <TouchableHighlight underlayColor="white" activeOpacity={1} onPress={() => this.handleRowPress(item)}>
         <View style={{
           elevation: 1,
           borderRadius: 2,
