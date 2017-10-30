@@ -2,7 +2,6 @@
 import React from 'react';
 import { Easing, Animated } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';

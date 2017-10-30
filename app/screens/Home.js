@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
 import {
   Text,
   View,
   StyleSheet,
   Image,
-  Button,
-  TouchableHighlight
+  TouchableHighlight,
+  FlatList
 } from 'react-native';
 import { colors } from '../config/styles';
 import { signs } from '../config/signs';

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+
 import { TabNavigationStack } from '../config/router';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator
-} from 'react-native';
 
 const styles = StyleSheet.create({
   center: {

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import CardInfo from '../components/CardInfo/CardInfo';
-
-import { signs } from '../config/signs';
 import { timeIntervals } from '../config/timeIntervals';
 
 class Day extends Component {
@@ -16,17 +14,7 @@ class Day extends Component {
     let dayInfo = data.day;
     let name = data.name;
     let timeInterval = timeIntervals.day;
-    let sign = signs.filter(function(obj) {
-      return name === obj.name;
-    });
-    return (
-      <CardInfo
-        image={sign[0].img}
-        name={name}
-        time={timeInterval}
-        description={dayInfo}
-      />
-    );
+    return <CardInfo name={name} time={timeInterval} description={dayInfo} />;
   }
 }
 

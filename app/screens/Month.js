@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import CardInfo from '../components/CardInfo/CardInfo';
-
-import { signs } from '../config/signs';
 import { timeIntervals } from '../config/timeIntervals';
 
 class Month extends Component {
@@ -16,17 +14,7 @@ class Month extends Component {
     let monthInfo = data.month;
     let name = data.name;
     let timeInterval = timeIntervals.month;
-    let sign = signs.filter(function(obj) {
-      return name === obj.name;
-    });
-    return (
-      <CardInfo
-        image={sign[0].img}
-        name={name}
-        time={timeInterval}
-        description={monthInfo}
-      />
-    );
+    return <CardInfo name={name} time={timeInterval} description={monthInfo} />;
   }
 }
 
