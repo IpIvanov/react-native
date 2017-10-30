@@ -25,26 +25,7 @@ class Day extends Component {
       return name === obj.name;
     });
     return (
-      <View style={{
-        elevation: 1,
-        borderRadius: 2,
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        padding: 20,
-        margin: 20,
-        marginTop: 50,
-        backgroundColor: '#fff',
-      }}>
-        <Image style={{width: 70, height: 70}} source={sign[0].img}/>
-        <Text style={{ fontFamily: 'Roboto', fontSize: 20, marginBottom: 10 }}>{name}</Text>
-        <Text style={{ fontFamily: 'Roboto', fontSize: 14, marginBottom: 10, color: colors.dimmedText }}>{now}</Text>
-        <ScrollView>
-          <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>{dayInfo}</Text>
-        </ScrollView>
-      </View>
+      <CardInfo image={sign[0].img} name={name} time={now} description={dayInfo}/>
     );
   }
 }

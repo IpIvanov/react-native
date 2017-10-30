@@ -20,6 +20,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
     backgroundColor: '#FFFFFF'
+  },
+  innerContainer: {
+    elevation: 1,
+    borderRadius: 2,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 18,
+    paddingRight: 16,
+    marginLeft: 14,
+    marginRight: 14,
+    marginTop: 0,
+    marginBottom: 6,
+  },
+  column: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  flatList: {
+    alignSelf: "stretch",
+    backgroundColor: '#FFFFFF'
+  },
+  img: {
+    width: 70,
+    height: 70
+  },
+  title: {
+    fontFamily: 'Roboto',
+    fontSize: 20
+  },
+  date: {
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    color: colors.dimmedText
   }
 });
 
@@ -38,31 +77,11 @@ class Home extends Component {
   _renderItem = ({ item }) => {
     return (
       <TouchableHighlight underlayColor="white" activeOpacity={1} onPress={() => this.handleRowPress(item)}>
-        <View style={{
-          elevation: 1,
-          borderRadius: 2,
-          flex: 1,
-          flexDirection: 'row',  // main axis
-          justifyContent: 'flex-start', // main axis
-          alignItems: 'center', // cross axis
-          paddingTop: 10,
-          paddingBottom: 10,
-          paddingLeft: 18,
-          paddingRight: 16,
-          marginLeft: 14,
-          marginRight: 14,
-          marginTop: 0,
-          marginBottom: 6,
-        }}>
-          <Image style={{width: 70, height: 70}} source={item.img}/>
-          <View style={{
-            flex: 1,
-            flexDirection: 'column',  // main axis
-            justifyContent: 'flex-start', // main axis
-            alignItems: 'center', // cross axis
-          }}>
-            <Text style={{ fontFamily: 'Roboto', fontSize: 20 }}>{item.name}</Text>
-            <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: colors.dimmedText }}>{item.date}</Text>
+        <View style={styles.innerContainer}>
+          <Image style={styles.img} source={item.img}/>
+          <View style={styles.column}>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.date}>{item.date}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -76,7 +95,7 @@ class Home extends Component {
           data={signs}
           renderItem={this._renderItem}
           keyExtractor={(item) => item.name}
-          style={{alignSelf: "stretch",  backgroundColor: '#FFFFFF'}}
+          style={styles.flatList}
           showsVerticalScrollIndicator={false}
         />
       </View>

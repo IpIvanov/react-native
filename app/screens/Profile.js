@@ -8,6 +8,15 @@ import {
   ActivityIndicator
 } from 'react-native';
 
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +45,18 @@ class Profile extends Component {
       .catch(error => {
         this.setState({ error, loading: false });
       });
+
+      // fetch('https://mywebsite.com/endpoint/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     firstParam: 'yourValue',
+      //     secondParam: 'yourOtherValue',
+      //   })
+      // })
   };
 
   render() {
@@ -49,12 +70,7 @@ class Profile extends Component {
         <ActivityIndicator
           animating={true}
           color="#aa3300"
-          style={[{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },{height: 100}, {transform: [{scale: 3}]}]}
+          style={[styles.center, {height: 100}, {transform: [{scale: 3}]}]}
           size="large"
         />
       );
