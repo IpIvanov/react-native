@@ -36,16 +36,16 @@ const styles = StyleSheet.create({
     marginLeft: 14,
     marginRight: 14,
     marginTop: 0,
-    marginBottom: 6,
+    marginBottom: 6
   },
   column: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   flatList: {
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     backgroundColor: '#FFFFFF'
   },
   img: {
@@ -68,25 +68,29 @@ class Home extends Component {
     super(props);
   }
 
-  handleRowPress = (item) => {
+  handleRowPress = item => {
     this.props.navigation.navigate('Profile', {
-      name: item.name,
+      sign: item.name,
       img: item.img
     });
   };
 
   _renderItem = ({ item }) => {
     return (
-      <TouchableHighlight underlayColor="white" activeOpacity={1} onPress={() => this.handleRowPress(item)}>
+      <TouchableHighlight
+        underlayColor="white"
+        activeOpacity={1}
+        onPress={() => this.handleRowPress(item)}
+      >
         <View style={styles.innerContainer}>
-          <Image style={styles.img} source={item.img}/>
+          <Image style={styles.img} source={item.img} />
           <View style={styles.column}>
             <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.date}>{item.date}</Text>
           </View>
         </View>
       </TouchableHighlight>
-    )
+    );
   };
 
   render() {
@@ -95,7 +99,7 @@ class Home extends Component {
         <FlatList
           data={signs}
           renderItem={this._renderItem}
-          keyExtractor={(item) => item.name}
+          keyExtractor={item => item.name}
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
         />
@@ -105,8 +109,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default Home;
-

@@ -1,5 +1,25 @@
 {
   "expo": {
-    "sdkVersion": "21.0.0"
+    "name": "Altair's Horoscopes",
+    "description":
+      "App for horoscopes. Here you can find daily, weekly, monthly and yearly horoscopes for all signs.",
+    "slug": "altair-horoscopes",
+    "privacy": "private",
+    "version": "1.0.0",
+    "icon": "./app/images/app-icon.png",
+    "loading": {
+      "icon": "./app/images/app-icon.png",
+      "hideExponentText": true
+    },
+    "sdkVersion": "21.0.0",
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.ipivanov.altairshoroscopes",
+      "versionCode": 1,
+      "permissions": []
+    }
   }
 }

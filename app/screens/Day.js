@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
-import moment from 'moment';
-import { colors } from '../config/styles';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  Image
-} from 'react-native';
+
+import CardInfo from '../components/CardInfo/CardInfo';
+
 import { signs } from '../config/signs';
+import { timeIntervals } from '../config/timeIntervals';
 
 class Day extends Component {
   constructor(props) {
@@ -18,22 +12,26 @@ class Day extends Component {
   }
 
   render() {
-    let data = this.props.screenProps[0];
+    let data = this.props.screenProps;
     let dayInfo = data.day;
     let name = data.name;
-    var now = moment().format('dddd (DD.MM.YYYY)');
-    const sign = signs.filter(function( obj ) {
+    let timeInterval = timeIntervals.day;
+    let sign = signs.filter(function(obj) {
       return name === obj.name;
     });
     return (
-      <CardInfo image={sign[0].img} name={name} time={now} description={dayInfo}/>
+      <CardInfo
+        image={sign[0].img}
+        name={name}
+        time={timeInterval}
+        description={dayInfo}
+      />
     );
   }
 }
 
 Day.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default Day;
-

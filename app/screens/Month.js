@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
 
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView
-} from 'react-native';
+import CardInfo from '../components/CardInfo/CardInfo';
+
+import { signs } from '../config/signs';
+import { timeIntervals } from '../config/timeIntervals';
 
 class Month extends Component {
   constructor(props) {
@@ -15,18 +12,26 @@ class Month extends Component {
   }
 
   render() {
-    let monthInfo = this.props.screenProps[0].month;
+    let data = this.props.screenProps;
+    let monthInfo = data.month;
+    let name = data.name;
+    let timeInterval = timeIntervals.month;
+    let sign = signs.filter(function(obj) {
+      return name === obj.name;
+    });
     return (
-      <View>
-        <Text>{monthInfo}</Text>
-      </View>
+      <CardInfo
+        image={sign[0].img}
+        name={name}
+        time={timeInterval}
+        description={monthInfo}
+      />
     );
   }
 }
 
 Month.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default Month;
-
