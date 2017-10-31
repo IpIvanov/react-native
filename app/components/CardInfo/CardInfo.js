@@ -36,7 +36,7 @@ class CardInfo extends Component {
         >
           {this.props.time}
         </Text>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>
             {this.props.description}
           </Text>

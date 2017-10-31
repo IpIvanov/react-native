@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 50,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#fff'
   },
   innerContainer: {
     elevation: 1,
@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   flatList: {
-    alignSelf: 'stretch',
-    backgroundColor: '#FFFFFF'
+    alignSelf: 'stretch'
   },
   img: {
     width: 70,
@@ -69,16 +68,15 @@ class Home extends Component {
 
   handleRowPress = item => {
     this.props.navigation.navigate('Profile', {
-      sign: item.name,
-      img: item.img
+      sign: item.name
     });
   };
 
   _renderItem = ({ item }) => {
     return (
       <TouchableHighlight
-        underlayColor="white"
-        activeOpacity={1}
+        underlayColor="#fff"
+        activeOpacity={0.8}
         onPress={() => this.handleRowPress(item)}
       >
         <View style={styles.innerContainer}>
