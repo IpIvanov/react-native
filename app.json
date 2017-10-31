@@ -11,7 +11,7 @@
       "icon": "./app/images/app-icon.png",
       "hideExponentText": true
     },
-    "sdkVersion": "21.0.0",
+    "sdkVersion": "22.0.0",
     "ios": {
       "supportsTablet": true,
       "buildNumber": "1"
