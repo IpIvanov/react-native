@@ -20,6 +20,7 @@ class CardInfo extends Component {
           style={{
             fontFamily: 'Roboto',
             fontSize: 14,
+            marginTop: 10,
             marginBottom: 10,
             color: colors.dimmedText
           }}

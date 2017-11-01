@@ -13,7 +13,8 @@ class Week extends Component {
     let data = this.props.screenProps;
     let weekInfo = data.week;
     let name = data.name;
-    let weekNumber = 'Week of year: ' + timeIntervals.week.weekOfYear;
+    let weekNumber =
+      'This is ' + timeIntervals.week.weekOfYear + ' week of the year.';
     let timeInterval =
       timeIntervals.week.startWeek + ' - ' + timeIntervals.week.endWeek;
     return (

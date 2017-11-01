@@ -1,41 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator, Text, View } from 'react-native';
 
 import { TabNavigationStack } from '../config/router';
 
 const styles = StyleSheet.create({
-  center: {
+  container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  text: {
+    fontSize: 16,
+    color: '#696969',
+    marginRight: 10
   }
 });
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-  }
 
-  getInitialState() {
-    return {
-      signInfo: null,
+    this.state = {
+      signInfo: {},
       showLoading: true
     };
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.makeRemoteRequest();
   }
 
-  fetchData = () => {
-    const API_URL = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
-    const { SIGN } = this.props.navigation.state.params;
-    const PARAMS = '?sign=' + SIGN;
-    const REQUEST_URL = API_URL + PARAMS;
+  makeRemoteRequest = () => {
+    const url = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
+    const { sign } = this.props.navigation.state.params;
 
-    fetch(REQUEST_URL)
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sign: sign
+      })
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -46,22 +56,23 @@ class Profile extends Component {
       .done();
   };
 
-  renderLoadingView = () => {
-    <ActivityIndicator
-      animating={true}
-      color="#aa3300"
-      style={[styles.center, { height: 100 }, { transform: [{ scale: 3 }] }]}
-      size="large"
-    />;
-  };
-
   render() {
-    if (this.state.showLoading) {
-      return this.renderLoadingView();
-    }
-
     const signInfo = this.state.signInfo;
-    return <TabNavigationStack screenProps={signInfo} />;
+    if (this.state.showLoading) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.text}>Please wait...</Text>
+          <ActivityIndicator
+            animating={true}
+            color="#aa3300"
+            style={[{ height: 80 }]}
+            size="large"
+          />
+        </View>
+      );
+    } else {
+      return <TabNavigationStack screenProps={signInfo} />;
+    }
   }
 }
 

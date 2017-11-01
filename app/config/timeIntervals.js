@@ -11,6 +11,6 @@ export const timeIntervals = {
       .endOf('isoWeek')
       .format('dddd (DD.MM)')
   },
-  month: moment().format('MMMM (YYYY)'),
+  month: moment().format('MMMM'),
   year: moment().format('YYYY')
 };
