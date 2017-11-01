@@ -16,61 +16,52 @@ const styles = StyleSheet.create({
 class Profile extends Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {
-      signInfo: {},
+  getInitialState() {
+    return {
+      signInfo: null,
       showLoading: true
     };
   }
 
   componentDidMount() {
-    this.makeRemoteRequest();
+    this.fetchData();
   }
 
-  makeRemoteRequest = () => {
-    const url = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
-    const { sign } = this.props.navigation.state.params;
+  fetchData = () => {
+    const API_URL = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
+    const { SIGN } = this.props.navigation.state.params;
+    const PARAMS = '?sign=' + SIGN;
+    const REQUEST_URL = API_URL + PARAMS;
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sign: sign
-      })
-    })
+    fetch(REQUEST_URL)
       .then(res => res.json())
       .then(res => {
         this.setState({
-          signInfo: res
+          signInfo: res,
+          showLoading: false
         });
-        this.setState({ showLoading: false });
       })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+      .done();
+  };
+
+  renderLoadingView = () => {
+    <ActivityIndicator
+      animating={true}
+      color="#aa3300"
+      style={[styles.center, { height: 100 }, { transform: [{ scale: 3 }] }]}
+      size="large"
+    />;
   };
 
   render() {
-    const signInfo = this.state.signInfo;
     if (this.state.showLoading) {
-      return (
-        <ActivityIndicator
-          animating={true}
-          color="#aa3300"
-          style={[
-            styles.center,
-            { height: 100 },
-            { transform: [{ scale: 3 }] }
-          ]}
-          size="large"
-        />
-      );
-    } else {
-      return <TabNavigationStack screenProps={signInfo} />;
+      return this.renderLoadingView();
     }
+
+    const signInfo = this.state.signInfo;
+    return <TabNavigationStack screenProps={signInfo} />;
   }
 }
 
