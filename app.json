@@ -8,9 +8,18 @@
     "version": "1.0.0",
     "icon": "./app/images/app-icon.png",
     "loading": {
-      "icon": "./app/images/app-icon.png",
+      //"icon": "./app/images/app-icon.png",
       "hideExponentText": true
     },
+    "splash": {
+      "image": "./app/images/background.png",
+      "backgroundColor": "#000000",
+      "resizeMode": "cover",
+      "hideExponentText": true
+    },
+    // "notification": {
+    //   "icon": "./app/images/notification_logo.png"
+    // },
     "sdkVersion": "22.0.0",
     "ios": {
       "supportsTablet": true,

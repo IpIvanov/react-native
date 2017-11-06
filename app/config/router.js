@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Easing, Animated } from 'react-native';
+import { Easing, Animated, Text } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Home from '../screens/Home';
@@ -15,18 +15,29 @@ export const NavigationStack = StackNavigator(
     Home: {
       screen: Home,
       navigationOptions: ({ navigation }) => ({
-        title: 'Home'
+        title: "Altair's Horoscopes",
+        headerTitleStyle: {
+          color: '#aa3300',
+          fontSize: 14,
+          fontWeight: '600'
+        },
+        headerStyle: {
+          height: 40
+        }
       })
     },
     Profile: {
       screen: Profile,
       navigationOptions: ({ navigation }) => ({
-        title: 'Profile'
+        headerTintColor: '#aa3300',
+        headerStyle: {
+          height: 40
+        }
       })
     }
   },
   {
-    headerMode: 'none',
+    headerMode: 'float',
     mode: 'card',
     navigationOptions: {
       gesturesEnabled: false
