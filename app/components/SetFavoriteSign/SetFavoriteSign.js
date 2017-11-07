@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
 });
 
 class SetFavoriteSign extends Component {
-  handleItemPress(index, signs, selectedValue) {
-    this.props.updateSigns(index, signs, selectedValue);
+  handleItemPress() {
+    this.props.updateSigns(this.props.index, !this.props.isFavorite);
   }
 
   render() {
@@ -21,12 +21,7 @@ class SetFavoriteSign extends Component {
         <TouchableHighlight
           underlayColor="#fff"
           activeOpacity={0.5}
-          onPress={() =>
-            this.handleItemPress(
-              this.props.index,
-              this.props.signs,
-              !this.props.isFavorite
-            )}
+          onPress={() => this.handleItemPress()}
           style={styles.position}
         >
           <Ionicons name="ios-star" size={18} color="#9F9F9F" />
@@ -37,12 +32,7 @@ class SetFavoriteSign extends Component {
         <TouchableHighlight
           underlayColor="#fff"
           activeOpacity={0.5}
-          onPress={() =>
-            this.handleItemPress(
-              this.props.index,
-              this.props.signs,
-              !this.props.isFavorite
-            )}
+          onPress={() => this.handleItemPress()}
           style={styles.position}
         >
           <Ionicons name="ios-star-outline" size={18} color="#9F9F9F" />

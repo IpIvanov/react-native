@@ -79,14 +79,15 @@ class Home extends Component {
 
     let storedSign = await this._getfavoriteSign();
     let result = JSON.parse(storedSign);
+
     if (result) {
       this.setState({
         signs: signs.map((item, i) => {
+          let updatedSign = { ...item };
           if (result.id - 1 === i) {
-            item.isFavorite = !item.isFavorite;
-            return item;
+            updatedSign.isFavorite = !updatedSign.isFavorite;
           }
-          return item;
+          return updatedSign;
         })
       });
     } else {
@@ -188,7 +189,9 @@ class Home extends Component {
     await AsyncStorage.clear();
   }
 
-  updateSigns = (index, signs, selectedValue) => {
+  updateSigns = (index, selectedValue) => {
+    let signs = this.state.signs;
+
     if (selectedValue) {
       this._setLocalStore(signs[index]);
     } else {
@@ -196,19 +199,13 @@ class Home extends Component {
     }
 
     this.setState({
-      signs: signs.map(item => {
-        item['isFavorite'] = false;
-        return item;
-      })
-    });
-
-    this.setState({
       signs: signs.map((item, i) => {
+        let updatedSign = { ...item };
+        updatedSign.isFavorite = false;
         if (i === index) {
-          item.isFavorite = selectedValue;
-          return item;
+          updatedSign.isFavorite = selectedValue;
         }
-        return item;
+        return updatedSign;
       })
     });
   };
@@ -236,7 +233,6 @@ class Home extends Component {
             updateSigns={this.updateSigns}
             index={index}
             isFavorite={item.isFavorite}
-            signs={this.state.signs}
           />
         </View>
       </TouchableHighlight>

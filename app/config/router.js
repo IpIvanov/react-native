@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Easing, Animated, Text } from 'react-native';
+import { Easing, Animated, Text, StatusBar } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Home from '../screens/Home';
@@ -22,7 +22,8 @@ export const NavigationStack = StackNavigator(
           fontWeight: '600'
         },
         headerStyle: {
-          height: 40
+          height: 40,
+          marginTop: StatusBar.currentHeight
         }
       })
     },
@@ -31,13 +32,14 @@ export const NavigationStack = StackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerTintColor: '#aa3300',
         headerStyle: {
-          height: 40
+          height: 40,
+          marginTop: StatusBar.currentHeight
         }
       })
     }
   },
   {
-    headerMode: 'float',
+    headerMode: 'screen',
     mode: 'card',
     navigationOptions: {
       gesturesEnabled: false
