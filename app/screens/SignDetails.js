@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Profile extends Component {
+class SignDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +34,7 @@ class Profile extends Component {
 
   makeRemoteRequest = () => {
     const url = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
-    const { sign } = this.props.navigation.state.params;
+    const { name } = this.props.navigation.state.params;
 
     fetch(url, {
       method: 'POST',
@@ -43,7 +43,7 @@ class Profile extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sign: sign
+        sign: name
       })
     })
       .then(res => res.json())
@@ -76,8 +76,8 @@ class Profile extends Component {
   }
 }
 
-Profile.propTypes = {
+SignDetails.propTypes = {
   navigation: PropTypes.object
 };
 
-export default Profile;
+export default SignDetails;

@@ -1,7 +1,8 @@
 {
   "name": "altairs-horoscopes",
-  "version": "1.0.0",
-  "description": "App for horoscopes. Here you can find daily, weekly, monthly and yearly horoscopes for all signs.",
+  "version": "1.0.1",
+  "description":
+    "App for horoscopes. Here you can find daily, weekly, monthly and yearly horoscopes for all signs.",
   "author": "Ivan Petrov Ivanov",
   "private": true,
   "devDependencies": {

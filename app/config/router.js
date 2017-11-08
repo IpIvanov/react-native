@@ -1,32 +1,45 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Easing, Animated } from 'react-native';
+import { Easing, Animated, Text, StatusBar } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
-import Home from '../screens/Home';
-import Profile from '../screens/Profile';
-import Day from '../screens/Day';
-import Week from '../screens/Week';
-import Month from '../screens/Month';
-import Year from '../screens/Year';
+import SignsList from '../screens/SignsList';
+import SignDetails from '../screens/SignDetails';
+import Day from '../screens/Tabs/Day';
+import Week from '../screens/Tabs/Week';
+import Month from '../screens/Tabs/Month';
+import Year from '../screens/Tabs/Year';
 
 export const NavigationStack = StackNavigator(
   {
-    Home: {
-      screen: Home,
+    SignsList: {
+      screen: SignsList,
       navigationOptions: ({ navigation }) => ({
-        title: 'Home'
+        title: "Altair's Horoscopes",
+        headerTitleStyle: {
+          color: '#aa3300',
+          fontSize: 14,
+          fontWeight: '600'
+        },
+        headerStyle: {
+          height: 40,
+          marginTop: StatusBar.currentHeight
+        }
       })
     },
-    Profile: {
-      screen: Profile,
+    SignDetails: {
+      screen: SignDetails,
       navigationOptions: ({ navigation }) => ({
-        title: 'Profile'
+        headerTintColor: '#aa3300',
+        headerStyle: {
+          height: 40,
+          marginTop: StatusBar.currentHeight
+        }
       })
     }
   },
   {
-    headerMode: 'none',
+    headerMode: 'screen',
     mode: 'card',
     navigationOptions: {
       gesturesEnabled: false
