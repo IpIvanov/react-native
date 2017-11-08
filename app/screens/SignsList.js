@@ -9,12 +9,12 @@ import {
   FlatList,
   AsyncStorage,
   AppState,
-  StatusBar
+  ToastAndroid
 } from 'react-native';
 import { Permissions, Notifications, Constants } from 'expo';
 import moment from 'moment';
-import SetFavoriteSign from '../components/SetFavoriteSign/SetFavoriteSign';
 
+import FavoriteSign from '../components/FavoriteSign/FavoriteSign';
 import { signs } from '../config/signs';
 
 const styles = StyleSheet.create({
@@ -66,29 +66,25 @@ const styles = StyleSheet.create({
   }
 });
 
-class Home extends Component {
+class SignsList extends Component {
   constructor(props) {
     super(props);
 
-    this._handleAppStateChange = this._handleAppStateChange.bind(this);
     this.state = { signs: [] };
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
 
   async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    let storedSign = await this._getfavoriteSign();
+    let storedSign = await this._getfavoriteSignFromLocalStorage();
     let result = JSON.parse(storedSign);
 
     if (result) {
+      let signsWithFavorite = [...signs];
+      signsWithFavorite[result.id - 1].isFavorite = true;
       this.setState({
-        signs: signs.map((item, i) => {
-          let updatedSign = { ...item };
-          if (result.id - 1 === i) {
-            updatedSign.isFavorite = !updatedSign.isFavorite;
-          }
-          return updatedSign;
-        })
+        signs: signsWithFavorite
       });
     } else {
       this.setState({
@@ -98,13 +94,12 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   async _handleAppStateChange(appState) {
     if (appState === 'active') {
-      console.log('cancel notification');
-      Notifications.addListener(this._handleNotification);
+      Notifications.addListener(this._handleNotificationPress);
       Notifications.cancelAllScheduledNotificationsAsync();
     }
     if (appState === 'background') {
@@ -112,24 +107,20 @@ class Home extends Component {
         Permissions.NOTIFICATIONS
       );
 
-      //if (Constants.isDevice && permissionsResult.status === 'granted') {
-
-      //}
-
-      let favoriteSign = this.state.signs.filter(sign => {
-        return sign.isFavorite;
-      });
-      if (favoriteSign.length > 0) {
-        console.log('Notification permissions granted.');
-        this._sendDelayedNotification(favoriteSign[0]);
+      if (Constants.isDevice && permissionsResult.status === 'granted') {
+        let favoriteSign = this.state.signs.filter(sign => {
+          return sign.isFavorite;
+        });
+        if (favoriteSign.length > 0) {
+          this._sendDelayedNotification(favoriteSign[0]);
+        }
       }
     }
   }
 
-  _handleNotification = ({ origin, data }) => {
-    console.info(`Notification (${origin}) with data: ${JSON.stringify(data)}`);
+  _handleNotificationPress = ({ origin, data }) => {
     if (origin === 'selected') {
-      this.props.navigation.navigate('Profile', {
+      this.props.navigation.navigate('SignDetails', {
         sign: data.favoriteSign.name
       });
     }
@@ -141,19 +132,16 @@ class Home extends Component {
       body: 'Your daily horoscope is ready you can check it out!',
       data: { favoriteSign: favoriteSign },
       android: {
-        //icon: 'https://image.ibb.co/jr4aVw/app_icon.png',
         priority: 'high',
         vibrate: true
       }
     };
+
     const schedulingOptions = {
-      // moment()
-      //   .endOf('day')
-      //   .add(10, 'hours')
-      //   .unix() * 1000,
       time:
         moment()
-          .add(1000, 'milliseconds')
+          .endOf('day')
+          .add(10, 'hours')
           .unix() * 1000,
       repeat: 'day'
     };
@@ -161,18 +149,10 @@ class Home extends Component {
     Notifications.scheduleLocalNotificationAsync(
       localNotification,
       schedulingOptions
-    )
-      .then(id =>
-        console.info(
-          `Delayed notification scheduled (${id}) at ${moment(
-            schedulingOptions.time
-          ).format()}`
-        )
-      )
-      .catch(err => console.error(err));
+    );
   }
 
-  async _setLocalStore(selectedValue) {
+  async _setLocalStorage(selectedValue) {
     try {
       await AsyncStorage.setItem('favoriteSign', JSON.stringify(selectedValue));
     } catch (error) {
@@ -180,39 +160,45 @@ class Home extends Component {
     }
   }
 
-  async _getfavoriteSign() {
+  async _clearLocalStorage() {
+    await AsyncStorage.clear();
+  }
+
+  async _getfavoriteSignFromLocalStorage() {
     let storedItem = await AsyncStorage.getItem('favoriteSign');
     return storedItem;
   }
 
-  async _clearLocalStore() {
-    await AsyncStorage.clear();
-  }
-
-  updateSigns = (index, selectedValue) => {
+  toggleFavorite = (index, selectedValue) => {
     let signs = this.state.signs;
 
     if (selectedValue) {
-      this._setLocalStore(signs[index]);
+      this._setLocalStorage(signs[index]);
+      ToastAndroid.showWithGravityAndOffset(
+        `Daily notifications for ${signs[index].name} are set.`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      );
     } else {
-      this._clearLocalStore();
+      this._clearLocalStorage();
     }
-
     this.setState({
       signs: signs.map((item, i) => {
-        let updatedSign = { ...item };
-        updatedSign.isFavorite = false;
+        let clonedSign = { ...item };
+        clonedSign.isFavorite = false;
         if (i === index) {
-          updatedSign.isFavorite = selectedValue;
+          clonedSign.isFavorite = selectedValue;
         }
-        return updatedSign;
+        return clonedSign;
       })
     });
   };
 
-  handleRowPress = item => {
-    this.props.navigation.navigate('Profile', {
-      sign: item.name
+  handleRowPress = name => {
+    this.props.navigation.navigate('SignDetails', {
+      name: name
     });
   };
 
@@ -221,7 +207,7 @@ class Home extends Component {
       <TouchableHighlight
         underlayColor="#fff"
         activeOpacity={0.8}
-        onPress={() => this.handleRowPress(item)}
+        onPress={() => this.handleRowPress(item.name)}
       >
         <View style={styles.innerContainer}>
           <Image style={styles.img} source={item.img} />
@@ -229,8 +215,8 @@ class Home extends Component {
             <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.date}>{item.date}</Text>
           </View>
-          <SetFavoriteSign
-            updateSigns={this.updateSigns}
+          <FavoriteSign
+            toggleFavorite={this.toggleFavorite}
             index={index}
             isFavorite={item.isFavorite}
           />
@@ -255,8 +241,8 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
+SignsList.propTypes = {
   navigation: PropTypes.object
 };
 
-export default Home;
+export default SignsList;

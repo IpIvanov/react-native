@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import CardInfo from '../components/CardInfo/CardInfo';
-import { timeIntervals } from '../config/timeIntervals';
+import CardInfo from '../../components/CardInfo/CardInfo';
+import { timeIntervals } from '../../config/timeIntervals';
 
 class Month extends Component {
   constructor(props) {

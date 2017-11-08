@@ -3,17 +3,17 @@ import React from 'react';
 import { Easing, Animated, Text, StatusBar } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
-import Home from '../screens/Home';
-import Profile from '../screens/Profile';
-import Day from '../screens/Day';
-import Week from '../screens/Week';
-import Month from '../screens/Month';
-import Year from '../screens/Year';
+import SignsList from '../screens/SignsList';
+import SignDetails from '../screens/SignDetails';
+import Day from '../screens/Tabs/Day';
+import Week from '../screens/Tabs/Week';
+import Month from '../screens/Tabs/Month';
+import Year from '../screens/Tabs/Year';
 
 export const NavigationStack = StackNavigator(
   {
-    Home: {
-      screen: Home,
+    SignsList: {
+      screen: SignsList,
       navigationOptions: ({ navigation }) => ({
         title: "Altair's Horoscopes",
         headerTitleStyle: {
@@ -27,8 +27,8 @@ export const NavigationStack = StackNavigator(
         }
       })
     },
-    Profile: {
-      screen: Profile,
+    SignDetails: {
+      screen: SignDetails,
       navigationOptions: ({ navigation }) => ({
         headerTintColor: '#aa3300',
         headerStyle: {

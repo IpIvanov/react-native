@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   }
 });
 
-class SetFavoriteSign extends Component {
+class FavoriteSign extends Component {
   handleItemPress() {
-    this.props.updateSigns(this.props.index, !this.props.isFavorite);
+    this.props.toggleFavorite(this.props.index, !this.props.isFavorite);
   }
 
   render() {
@@ -42,4 +42,4 @@ class SetFavoriteSign extends Component {
   }
 }
 
-export default SetFavoriteSign;
+export default FavoriteSign;
