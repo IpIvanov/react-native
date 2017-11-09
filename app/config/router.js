@@ -1,23 +1,41 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Easing, Animated, Text, StatusBar } from 'react-native';
-import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+import { StatusBar, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  StackNavigator,
+  TabNavigator,
+  TabBarBottom,
+  DrawerNavigator
+} from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 
-import SignsList from '../screens/SignsList';
-import SignDetails from '../screens/SignDetails';
+import SignsListScreen from '../screens/SignsList';
+import SignDetailsScreen from '../screens/SignDetails';
 import Day from '../screens/Tabs/Day';
 import Week from '../screens/Tabs/Week';
 import Month from '../screens/Tabs/Month';
 import Year from '../screens/Tabs/Year';
 
+const { width } = Dimensions.get('window');
+
+const mainColor = '#aa3300';
+
 export const NavigationStack = StackNavigator(
   {
     SignsList: {
-      screen: SignsList,
+      screen: SignsListScreen,
       navigationOptions: ({ navigation }) => ({
         title: "Altair's Horoscopes",
+        headerLeft: (
+          <TouchableOpacity
+            style={{ marginLeft: 20 }}
+            onPress={() => navigation.navigate('DrawerOpen')}
+          >
+            <Ionicons name="ios-menu" size={24} color={mainColor} />
+          </TouchableOpacity>
+        ),
         headerTitleStyle: {
-          color: '#aa3300',
+          color: mainColor,
           fontSize: 14,
           fontWeight: '600'
         },
@@ -28,9 +46,9 @@ export const NavigationStack = StackNavigator(
       })
     },
     SignDetails: {
-      screen: SignDetails,
+      screen: SignDetailsScreen,
       navigationOptions: ({ navigation }) => ({
-        headerTintColor: '#aa3300',
+        headerTintColor: mainColor,
         headerStyle: {
           height: 40,
           marginTop: StatusBar.currentHeight
@@ -43,6 +61,29 @@ export const NavigationStack = StackNavigator(
     mode: 'card',
     navigationOptions: {
       gesturesEnabled: false
+    }
+  }
+);
+
+export const DrawerNavigatorStack = DrawerNavigator(
+  {
+    SignsList: {
+      screen: NavigationStack
+    }
+  },
+  {
+    drawerWidth: width - 150,
+    contentOptions: {
+      activeTintColor: mainColor,
+      itemsContainerStyle: {
+        marginVertical: 0
+      },
+      labelStyle: {
+        paddingTop: StatusBar.currentHeight + 20
+      },
+      iconContainerStyle: {
+        opacity: 1
+      }
     }
   }
 );
