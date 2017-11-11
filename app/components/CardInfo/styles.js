@@ -7,13 +7,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    paddingTop: 50,
+    paddingTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: '#fff'
-  },
-  img: {
-    width: 70,
-    height: 70
   }
 });

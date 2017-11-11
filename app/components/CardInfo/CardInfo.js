@@ -15,12 +15,10 @@ class CardInfo extends Component {
         <Text style={{ fontFamily: 'Roboto', fontSize: 20, marginBottom: 10 }}>
           {this.props.name}
         </Text>
-        <Image style={styles.img} source={sign[0].img} />
         <Text
           style={{
             fontFamily: 'Roboto',
             fontSize: 14,
-            marginTop: 10,
             marginBottom: 10,
             color: colors.dimmedText
           }}

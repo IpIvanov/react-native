@@ -9,12 +9,13 @@ import {
 } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
-import SignsListScreen from '../screens/SignsList';
-import SignDetailsScreen from '../screens/SignDetails';
+import SignsListScreen from '../screens/SignsList/SignsList';
+import SignDetailsScreen from '../screens/SignDetails/SignDetails';
 import Day from '../screens/Tabs/Day';
 import Week from '../screens/Tabs/Week';
 import Month from '../screens/Tabs/Month';
 import Year from '../screens/Tabs/Year';
+import HeaderSignDetails from '../components/HeaderSignDetails/HeaderSignDetails';
 
 const { width } = Dimensions.get('window');
 
@@ -49,6 +50,7 @@ export const NavigationStack = StackNavigator(
       screen: SignDetailsScreen,
       navigationOptions: ({ navigation }) => ({
         headerTintColor: mainColor,
+        headerRight: <HeaderSignDetails infoProps={navigation.state.params} />,
         headerStyle: {
           height: 40,
           marginTop: StatusBar.currentHeight
@@ -57,7 +59,7 @@ export const NavigationStack = StackNavigator(
     }
   },
   {
-    headerMode: 'screen',
+    headerMode: 'float',
     mode: 'card',
     navigationOptions: {
       gesturesEnabled: false
@@ -115,7 +117,7 @@ export const TabNavigationStack = TabNavigator(
         fontSize: 12
       },
       style: {
-        height: 35,
+        height: 30,
         padding: 0,
         margin: 0,
         paddingBottom: 5

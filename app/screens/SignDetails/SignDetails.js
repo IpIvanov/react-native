@@ -2,21 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, ActivityIndicator, Text, View } from 'react-native';
 
-import { TabNavigationStack } from '../config/router';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontSize: 16,
-    color: '#696969',
-    marginRight: 10
-  }
-});
+import { TabNavigationStack } from '../../config/router';
+import styles from './styles';
 
 class SignDetails extends Component {
   constructor(props) {
@@ -34,7 +21,7 @@ class SignDetails extends Component {
 
   makeRemoteRequest = () => {
     const url = 'https://app-nodejs-mongodb.herokuapp.com/api/sign';
-    const { name } = this.props.navigation.state.params;
+    const { sign } = this.props.navigation.state.params;
 
     fetch(url, {
       method: 'POST',
@@ -43,7 +30,7 @@ class SignDetails extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        sign: name
+        sign: sign.name
       })
     })
       .then(res => res.json())
