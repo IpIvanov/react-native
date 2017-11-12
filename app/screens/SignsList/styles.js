@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginLeft: 14,
     marginRight: 14,
     marginTop: 0,
-    marginBottom: 6
+    marginBottom: 8
   },
   column: {
     flex: 1,

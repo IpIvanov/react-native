@@ -24,7 +24,7 @@ class FavoriteSign extends Component {
           onPress={() => this.handleItemPress()}
           style={styles.position}
         >
-          <Ionicons name="ios-star" size={18} color="#9F9F9F" />
+          <Ionicons name="ios-star" size={20} color="#9F9F9F" />
         </TouchableHighlight>
       );
     } else {
@@ -35,7 +35,7 @@ class FavoriteSign extends Component {
           onPress={() => this.handleItemPress()}
           style={styles.position}
         >
-          <Ionicons name="ios-star-outline" size={18} color="#9F9F9F" />
+          <Ionicons name="ios-star-outline" size={20} color="#9F9F9F" />
         </TouchableHighlight>
       );
     }

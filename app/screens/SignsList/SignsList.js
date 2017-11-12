@@ -22,8 +22,8 @@ class SignsList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { signs: [] };
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
+    this.state = { signs: [] };
   }
 
   async componentDidMount() {
@@ -31,7 +31,6 @@ class SignsList extends Component {
 
     let storedSign = await this._getfavoriteSignFromLocalStorage();
     let result = JSON.parse(storedSign);
-
     if (result) {
       let signsWithFavorite = [...signs];
       signsWithFavorite[result.id - 1].isFavorite = true;
@@ -45,14 +44,14 @@ class SignsList extends Component {
     }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   async _handleAppStateChange(appState) {
     if (appState === 'active') {
-      Notifications.addListener(this._handleNotificationPress);
       Notifications.cancelAllScheduledNotificationsAsync();
+      Notifications.addListener(this._handleNotificationPress);
     }
     if (appState === 'background') {
       let permissionsResult = await Permissions.askAsync(
@@ -73,7 +72,7 @@ class SignsList extends Component {
   _handleNotificationPress = ({ origin, data }) => {
     if (origin === 'selected') {
       this.props.navigation.navigate('SignDetails', {
-        sign: data.favoriteSign.name
+        sign: data.favoriteSign
       });
     }
   };
@@ -101,7 +100,15 @@ class SignsList extends Component {
     Notifications.scheduleLocalNotificationAsync(
       localNotification,
       schedulingOptions
-    );
+    )
+      .then(id =>
+        console.info(
+          `Delayed notification scheduled (${id}) at ${moment(
+            schedulingOptions.time
+          ).format()}`
+        )
+      )
+      .catch(err => console.error(err));
   }
 
   async _setLocalStorage(selectedValue) {
