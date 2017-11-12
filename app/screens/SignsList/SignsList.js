@@ -14,64 +14,16 @@ import {
 import { Permissions, Notifications, Constants } from 'expo';
 import moment from 'moment';
 
-import FavoriteSign from '../components/FavoriteSign/FavoriteSign';
-import { signs } from '../config/signs';
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    padding: 8,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  innerContainer: {
-    elevation: 1,
-    borderRadius: 2,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 18,
-    paddingRight: 16,
-    marginLeft: 14,
-    marginRight: 14,
-    marginTop: 0,
-    marginBottom: 6
-  },
-  column: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  flatList: {
-    alignSelf: 'stretch'
-  },
-  img: {
-    width: 70,
-    height: 70
-  },
-  title: {
-    fontFamily: 'Roboto',
-    fontSize: 20
-  },
-  date: {
-    fontFamily: 'Roboto',
-    fontSize: 12,
-    color: '#696969'
-  }
-});
+import FavoriteSign from '../../components/FavoriteSign/FavoriteSign';
+import styles from './styles';
+import { signs } from '../../config/signs';
 
 class SignsList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { signs: [] };
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
+    this.state = { signs: [] };
   }
 
   async componentDidMount() {
@@ -79,7 +31,6 @@ class SignsList extends Component {
 
     let storedSign = await this._getfavoriteSignFromLocalStorage();
     let result = JSON.parse(storedSign);
-
     if (result) {
       let signsWithFavorite = [...signs];
       signsWithFavorite[result.id - 1].isFavorite = true;
@@ -93,14 +44,14 @@ class SignsList extends Component {
     }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   async _handleAppStateChange(appState) {
     if (appState === 'active') {
-      Notifications.addListener(this._handleNotificationPress);
       Notifications.cancelAllScheduledNotificationsAsync();
+      Notifications.addListener(this._handleNotificationPress);
     }
     if (appState === 'background') {
       let permissionsResult = await Permissions.askAsync(
@@ -121,7 +72,7 @@ class SignsList extends Component {
   _handleNotificationPress = ({ origin, data }) => {
     if (origin === 'selected') {
       this.props.navigation.navigate('SignDetails', {
-        sign: data.favoriteSign.name
+        sign: data.favoriteSign
       });
     }
   };
@@ -149,7 +100,15 @@ class SignsList extends Component {
     Notifications.scheduleLocalNotificationAsync(
       localNotification,
       schedulingOptions
-    );
+    )
+      .then(id =>
+        console.info(
+          `Delayed notification scheduled (${id}) at ${moment(
+            schedulingOptions.time
+          ).format()}`
+        )
+      )
+      .catch(err => console.error(err));
   }
 
   async _setLocalStorage(selectedValue) {
@@ -196,9 +155,9 @@ class SignsList extends Component {
     });
   };
 
-  handleRowPress = name => {
+  handleRowPress = sign => {
     this.props.navigation.navigate('SignDetails', {
-      name: name
+      sign: sign
     });
   };
 
@@ -207,7 +166,7 @@ class SignsList extends Component {
       <TouchableHighlight
         underlayColor="#fff"
         activeOpacity={0.8}
-        onPress={() => this.handleRowPress(item.name)}
+        onPress={() => this.handleRowPress(item)}
       >
         <View style={styles.innerContainer}>
           <Image style={styles.img} source={item.img} />
