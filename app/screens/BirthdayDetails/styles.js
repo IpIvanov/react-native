@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     paddingTop: 10,
-    paddingVertical: -20
+    paddingBottom: 10
   },
   innerContainer: {
     elevation: 1,

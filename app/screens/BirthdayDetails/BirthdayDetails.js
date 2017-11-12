@@ -41,7 +41,7 @@ class BirthdayDetails extends Component {
       return <Loader />;
     } else {
       return (
-        <ScrollView style={styles.mainContainer}>
+        <ScrollView contentContainerStyle={styles.mainContainer}>
           <View style={styles.innerContainer}>
             <Text style={styles.title}>Zodiac</Text>
             <Text style={styles.info}>{this.state.birthDayDetails.zodiac}</Text>
