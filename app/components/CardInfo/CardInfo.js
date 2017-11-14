@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Image } from 'react-native';
+import { AdMobBanner } from 'expo';
+
 import styles from './styles';
 import { colors } from '../../config/styles';
 import { signs } from '../../config/signs';
@@ -40,6 +42,15 @@ class CardInfo extends Component {
             {this.props.description}
           </Text>
         </ScrollView>
+        <View>
+          <AdMobBanner
+            bannerSize="fullBaner"
+            adUnitID="ca-app-pub-1600344268902247/7527861885"
+            adViewDidReceiveAd={null}
+            testDeviceID={__DEV__ ? 'EMULATOR' : ''}
+            didFailToReceiveAdWithError={this.bannerError}
+          />
+        </View>
       </View>
     );
   }
