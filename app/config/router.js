@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 import {
   StackNavigator,
@@ -127,8 +128,8 @@ export const DrawerNavigatorStack = DrawerNavigator(
   },
   {
     initialRouteName: 'SignsList',
-    drawerWidth: width - 130,
-    drawerPosition: 'right',
+    drawerWidth: width - 150,
+    drawerPosition: 'left',
     drawerBackgroundColor: '#fff',
     contentComponent: props => {
       return (
@@ -139,21 +140,14 @@ export const DrawerNavigatorStack = DrawerNavigator(
             justifyContent: 'flex-start'
           }}
         >
-          <Text
+          <Image
+            resizeMode="cover"
             style={{
-              color: mainColor,
-              fontSize: 16,
-              fontWeight: '600',
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              marginTop: StatusBar.currentHeight,
-              borderBottomWidth: 1,
-              borderBottomColor: '#d6d7da',
-              height: 40
+              width: width - 150,
+              height: StatusBar.currentHeight + 40
             }}
-          >
-            Menu
-          </Text>
+            source={require('../images/menu_image.png')}
+          />
           <DrawerItems {...props} />
         </View>
       );
@@ -163,10 +157,10 @@ export const DrawerNavigatorStack = DrawerNavigator(
       activeBackgroundColor: '#fff',
       labelStyle: {
         color: mainColor,
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '600',
         flex: 1,
-        textAlign: 'center'
+        textAlign: 'left'
       }
     }
   }
