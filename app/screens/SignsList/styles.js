@@ -46,5 +46,34 @@ export default StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 12,
     color: '#696969'
+  },
+  modalContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'stretch',
+    backgroundColor: ' rgba(0, 0, 0, 0.7)'
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 25
+  },
+  modalTouchableHighlightTop: {
+    borderRadius: 15,
+    backgroundColor: '#fff',
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 5,
+    padding: 10
+  },
+  modalTouchableHighlightBottom: {
+    borderRadius: 15,
+    backgroundColor: '#fff',
+    margin: 10,
+    marginTop: 0,
+    padding: 10
   }
 });

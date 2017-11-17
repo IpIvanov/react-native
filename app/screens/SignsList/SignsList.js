@@ -9,7 +9,9 @@ import {
   FlatList,
   AsyncStorage,
   AppState,
-  ToastAndroid
+  ToastAndroid,
+  Modal,
+  Linking
 } from 'react-native';
 import { Permissions, Notifications, Constants } from 'expo';
 import moment from 'moment';
@@ -23,7 +25,10 @@ class SignsList extends Component {
     super(props);
 
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
-    this.state = { signs: [] };
+    this.state = {
+      signs: [],
+      modalVisible: false
+    };
   }
 
   async componentDidMount() {
@@ -52,6 +57,7 @@ class SignsList extends Component {
     if (appState === 'active') {
       Notifications.cancelAllScheduledNotificationsAsync();
       Notifications.addListener(this._handleNotificationPress);
+      this._checkIfUpdateExists();
     }
     if (appState === 'background') {
       let permissionsResult = await Permissions.askAsync(
@@ -128,6 +134,19 @@ class SignsList extends Component {
     return storedItem;
   }
 
+  _checkIfUpdateExists() {
+    const url = 'https://app-nodejs-mongodb.herokuapp.com/api/app-version';
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          modalVisible: res.version !== Constants.manifest.version
+        });
+      })
+      .done();
+  }
+
   toggleFavorite = (index, selectedValue) => {
     let signs = this.state.signs;
 
@@ -185,8 +204,42 @@ class SignsList extends Component {
   };
 
   render() {
+    let storeUrl =
+      'https://play.google.com/store/apps/details?id=com.ipivanov.altairshoroscopes';
     return (
       <View style={styles.mainContainer}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            return null;
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>New Version is Available!</Text>
+            <TouchableHighlight
+              style={styles.modalTouchableHighlightTop}
+              onPress={() => {
+                Linking.openURL(storeUrl);
+              }}
+            >
+              <Text
+                style={{ fontSize: 24, color: '#aa3300', textAlign: 'center' }}
+              >
+                Update
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.modalTouchableHighlightBottom}
+              onPress={() => {
+                this.setState({ modalVisible: false });
+              }}
+            >
+              <Text style={{ fontSize: 24, textAlign: 'center' }}>Cancel</Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
         <FlatList
           data={this.state.signs}
           renderItem={this._renderItem}
